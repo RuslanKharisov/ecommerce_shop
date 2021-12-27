@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ASKTAT</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<script>
+	if (navigator.cookieEnabled === false){
+	alert("Cookies отключены!");
+}
+		var user = '{{request.user}}'
+
+		function getToken(name) {
+			//let cookieValue = null;
+			if (document.cookie && document.cookie !== '') {
+				const cookies = document.cookie.split(';');
+				for (let i = 0; i < cookies.length; i++) {
+					const cookie = cookies[i].trim();
+					// Does this cookie string begin with the name we want?
+					if (cookie.substring(0, name.length + 1) === (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+		var csrftoken = getToken('csrftoken');
+
+		function getCookie(name) {
+			// Split cookie string and get all individual name=value pairs in array
+			var cookieArr = document.cookie.split(';');
+
+			//loop through the array elements
+			for(var i = 0; i < cookieArr.length; i++){
+				cookiePair = cookieArr[i].split('=');
+
+				/*Removing whitespace at beginning of the cookie name
+				 and compare it with the given string */ 
+				if(name == cookieArr[0].trim()) {
+					//Decode the cookie value and return
+					return decodeURIComponent(cookiePair[1]);
+				}
+			}
+			//Return null if not found
+			return null;
+		}
+
+		var cart = JSON.parse(getCookie('cart'))
+		if(cart == undefined){
+		cart = {}
+		document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+		console.log('Cart:', cart)
+		}
+
+	</script>
+</head>
+
+<body>
+	<header class="header">
+		<div class="header__top">
+			<div class="container">
+				<div class="header__top-inner">
+					<nav class="menu">
+						<ul class="menu__list">
+							<li class="menu__item">
+								<a class="menu__link" href="{% url 'store' %}">Главная</a>
+							</li>
+							<li class="menu__item">
+								<a class="menu__link" href="{% url 'catalog' %}">Каталог</a>
+							</li>
+							<li class="menu__item">
+								<a class="menu__link" href="{% url 'checkout' %}">Доставка и оплата</a>
+							</li>
+						</ul>
+					</nav>
+					<a class="logo" href="{% url 'store' %}">
+						<img class="logo__img" src="{% static 'images/logo_silver.png' %}" alt="logo">
+					</a>
+					<div class="header__box">
+						<p class="header__address">
+							Казань, Скрябина 8Д
+						</p>
+						<ul class="user-list">
+							<li class="user-list__item">
+								<a class="user-list__link" href="#">
+									<img src="{% static 'images/heart.svg' %}" alt="">
+								</a>
+							</li>
+							<li class="user-list__item">
+								<a class="user-list__link" href="#">
+									<img src="{% static 'images/user.svg' %}" alt="">
+								</a>
+							</li>
+							<li class="user-list__item">
+								<a class="user-list__link basket" href="{% url 'cart' %}">
+									<img src="{% static 'images/basket.svg' %}" alt="">
+									<p id="cart-total" class="basket__num">{{cartItems}}</p>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="header__bottom">
+			<div class="container">
+
+				<ul class="menu-categories">
+					<li class="menu-categories__item">
+						<a class="menu-categories__link" href="#">Весы</a>
+					</li>
+					<li class="menu-categories__item">
+						<a class="menu-categories__link" href="#">Дозаторы</a>
+					</li>
+					<li class="menu-categories__item">
+						<a class="menu-categories__link" href="#">Автоматика</a>
+					</li>
+					<li class="menu-categories__item">
+						<a class="menu-categories__link" href="#">КИП</a>
+					</li>
+					<li class="menu-categories__item">
+						<a class="menu-categories__link" href="#">Запчасти</a>
+					</li>
+				</ul>
+
+			</div>
+		</div>
+	</header>
+
+	{% block content %}
+
+	{% endblock content %}
+
+
+	<!--	<script src="js/main.min.js"></script>-->
+	<!--	<script src="js/slick.min.js"></script>-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
+</body>
+
+</html>

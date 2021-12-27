@@ -1,0 +1,64 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+
+
+<section class="order">
+	<div class="container">
+		<div class="order__inner">
+			<div class="order__nav">
+				<a class="order__nav-btn" href="{% url 'store' %}">
+					продолжить покупки
+				</a>
+			</div>
+			<div class="order__summary">
+				<div class="order__summary-items">
+					<p>Items</p>
+					<span>{{order.get_cart_items}}</span>
+				</div>
+				<div class="order__summary-items">
+					<p>Total: </p>
+					<span>{{order.get_cart_total|floatformat:2}} Руб.</span>
+				</div>
+				<div class="order__summary-items">
+					<a class="order__summary-checkout" href="{% url 'checkout' %}">
+						Checkout
+					</a>
+				</div>
+			</div>
+
+			{% for item in items %}
+			<ul>
+				<li class="order__product">
+					<div class="order__product-item">
+						<img class="order__product-img" src="{{item.product.imageURL}}" alt="">
+					</div>
+					<div class="order__product-item">
+						<a class="order__product-name" href="#">
+							{{item.product.name}}
+						</a>
+					</div>
+					<div style="order__product-item">
+						<p>{{item.product.price|floatformat:2}} руб.</p>
+					</div>
+					<div class="order__product-item">
+						<p class="order__product-quantity">
+							{{item.quantity}}
+						</p>
+						<div class="order__product-quantity-btn quantity__btn">
+							<img  class="chg-quantity update-cart" data-product="{{item.product.id}}" data-action="add" src="{% static 'images/arrow-up.png' %}" height="15px" alt="" class="quantity__btn-chg">
+							<img  class="chg-quantity update-cart" data-product="{{item.product.id}}" data-action="remove" src="{% static 'images/arrow-down.png' %}" height="15px" alt="" class="quantity__btn-chg">
+						</div>
+					</div>
+					<div class="order__product-item">
+						<p class="order__product-price">{{item.get_total}} руб.</p>
+					</div>
+				</li>
+			</ul>
+			{% endfor %}
+		</div>
+	</div>
+</section>
+
+
+{% endblock content %}

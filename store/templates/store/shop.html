@@ -1,0 +1,26 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<div class="container">
+	<h3>Store</h3>
+	
+	<div class="product-item__wrapper">
+		<h4 class="product-item__title">Товар №1</h4>
+		<button data-product=articul1 data-action="add" class="btn plus">+</button>
+		<button data-product=articul1 data-action="add" class="btn minus">-</button>
+		<img class="product-item__img" src="{% static 'images\content\gidrotsikl-1.png' %}">
+	</div>
+	<div class="product-item__wrapper">
+		<h4 class="product-item__title">Товар №1</h4>
+		<button data-product=articul2 data-action="add" class="btn plus">+</button>
+		<button data-product=articul2 data-action="add" class="btn minus">-</button>
+		<img class="product-item__img" src="{% static 'images\content\gidrotsikl-1.png' %}">
+	</div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/testcart.js' %}"></script>
+
+{% endblock content %}
